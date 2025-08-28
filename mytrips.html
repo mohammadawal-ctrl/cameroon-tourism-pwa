@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Trips · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('trips');
+  </script>
+  
+<div class="container" id="root"></div>
+<script type="module">
+  import { CM } from './js/shared.js';
+  const root = document.getElementById('root');
+  const items = CM.state.bookings;
+  if(!items.length){ root.innerHTML='<div class="empty">No bookings yet.</div>'; }
+  else {
+    root.innerHTML = \`
+      <table class="table">
+        <thead><tr><th>Ref</th><th>Traveler</th><th>Date</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          \${items.map(b=>\`
+            <tr>
+              <td class="code">\${b.ref}</td>
+              <td>\${b.traveler.name}</td>
+              <td>\${new Date(b.createdAt).toLocaleString()}</td>
+              <td>\${b.status==='pending' ? '<span class="tag">pending</span>' : '<span class="tag">confirmed</span>'}</td>
+              <td><a class="btn secondary" href="confirm.html?ref=\${b.ref}">View</a></td>
+            </tr>
+          \`).join('')}
+        </tbody>
+      </table>
+    \`;
+  }
+</script>
+
+</body>
+</html>

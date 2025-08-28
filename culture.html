@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Culture · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('culture');
+  </script>
+  
+<div class="container" id="root"></div>
+<script type="module">
+  import { loadData } from './js/shared.js';
+  const { culture } = await loadData();
+  const root = document.getElementById('root');
+  root.innerHTML = `
+    <h1>Culture of Cameroon</h1>
+    <div class="grid cols-2">
+      <div class="card"><div class="content">
+        <h3>Languages by region</h3>
+        <ul>${Object.entries(culture.languages_by_region).map(([r,langs])=>`<li><strong>${r}:</strong> ${langs}</li>`).join('')}</ul>
+      </div></div>
+      <div class="card"><div class="content">
+        <h3>Festivals</h3>
+        <div class="tags">${culture.festivals.map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+      </div></div>
+      <div class="card"><div class="content">
+        <h3>Cuisines</h3>
+        <div class="tags">${culture.cuisines.map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+      </div></div>
+      <div class="card"><div class="content">
+        <h3>Traditional music & dance</h3>
+        <div class="tags">${culture.music_dance.map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+      </div></div>
+      <div class="card"><div class="content">
+        <h3>UNESCO heritage</h3>
+        <ul>${culture.unesco_sites.map(x=>`<li>${x}</li>`).join('')}</ul>
+      </div></div>
+    </div>
+  `;
+</script>
+
+</body>
+</html>

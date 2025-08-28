@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmation · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container" id="root"></div>
+<script type="module">
+  import { CM } from './js/shared.js';
+  const ref = CM.param('ref');
+  const b = CM.state.bookings.find(x=>x.ref===ref);
+  const root = document.getElementById('root');
+  if(!b){ root.innerHTML='<div class="empty">Booking not found.</div>'; throw new Error('not found'); }
+  const total = b.items.reduce((a,x)=>{
+    const addons=(x.addons||[]).reduce((s,z)=>s+z.price,0);
+    return a + (x.price+addons)*(x.qty||1);
+  },0);
+  root.innerHTML = \`
+    <div class="card"><div class="content">
+      <h1>Booking \${b.status==='pending' ? '<span class="tag">pending (offline)</span>' : '<span class="tag">confirmed</span>'}</h1>
+      <p class="kicker">Reference: <span class="code">\${b.ref}</span></p>
+      <h3>Traveler</h3>
+      <div>\${b.traveler.name} — \${b.traveler.email} — \${b.traveler.phone}</div>
+      <h3 style="margin-top:12px;">Items</h3>
+      <ul>
+        \${b.items.map(x=>\`<li>\${x.title} × \${x.qty} — \${CM.fmtXAF(x.price)}</li>\`).join('')}
+      </ul>
+      <div class="kicker">Total: \${CM.fmtXAF(total)}</div>
+      <div class="grid cols-2 section">
+        <div>
+          <div class="kicker">Offline QR ticket</div>
+          <canvas id="qr" width="240" height="240" style="background:#fff; border-radius:8px;"></canvas>
+        </div>
+        <div>
+          <a class="btn" id="dl">Download ticket</a>
+          <a class="btn secondary" href="mytrips.html">View My Trips</a>
+          <p class="small">QR is a placeholder pattern that encodes your reference for offline checks.</p>
+        </div>
+      </div>
+    </div></div>
+  \`;
+  CM.drawFakeQR(document.getElementById('qr'), ref);
+  document.getElementById('dl').addEventListener('click', ()=>{
+    const c = document.getElementById('qr');
+    const a = document.createElement('a');
+    a.href = c.toDataURL('image/png'); a.download = 'ticket-'+ref+'.png'; a.click();
+  });
+</script>
+
+</body>
+</html>

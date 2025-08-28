@@ -1,0 +1,39 @@
+{
+  "languages_by_region": {
+    "Centre": "Ewondo, Bassa",
+    "Littoral": "Duala, Bassa",
+    "South": "Bulu, Fang",
+    "South West": "Bafaw, Bakweri",
+    "North West": "Mungaka, Lamnso'",
+    "West": "Ghomala', Fe'fe'",
+    "Adamawa": "Fulfulde",
+    "North": "Fulfulde",
+    "Far North": "Fulfulde, Kanuri",
+    "East": "Baka, Maka"
+  },
+  "festivals": [
+    "Ngondo (Douala)",
+    "Nguon (Foumban)",
+    "Mount Cameroon Race (Buea)",
+    "Nyem-Nyem (Ngaoundéré)"
+  ],
+  "cuisines": [
+    "Ndolé",
+    "Eru & Waterfufu",
+    "Achu & Yellow Soup",
+    "Koki",
+    "Kwacoco Bible",
+    "Poulet DG"
+  ],
+  "music_dance": [
+    "Makossa",
+    "Bikutsi",
+    "Njang",
+    "Bend-skin",
+    "Assiko"
+  ],
+  "unesco_sites": [
+    "Dja Faunal Reserve",
+    "Sangha Trinational (shared site)"
+  ]
+}

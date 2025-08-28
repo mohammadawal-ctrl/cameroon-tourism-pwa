@@ -1,0 +1,202 @@
+[
+  {
+    "id": "adamawa",
+    "name": "Adamawa",
+    "image": "assets/adamawa.jpg",
+    "intro": "Highland plateaus and pastoral landscapes.",
+    "highlights": {
+      "festivals": [
+        "Guga"
+      ],
+      "cuisines": [
+        "Kilichi"
+      ],
+      "crafts": [
+        "Leatherwork"
+      ],
+      "music": [
+        "Fulbe rhythms"
+      ]
+    }
+  },
+  {
+    "id": "centre",
+    "name": "Centre",
+    "image": "assets/centre.jpg",
+    "intro": "Yaoundé – capital with lush hills.",
+    "highlights": {
+      "festivals": [
+        "Open Yaoundé"
+      ],
+      "cuisines": [
+        "Ndolé"
+      ],
+      "crafts": [
+        "Bronze casting"
+      ],
+      "music": [
+        "Bikutsi"
+      ]
+    }
+  },
+  {
+    "id": "east",
+    "name": "East",
+    "image": "assets/east.jpg",
+    "intro": "Dense forests and wildlife.",
+    "highlights": {
+      "festivals": [
+        "Lomié Cultural"
+      ],
+      "cuisines": [
+        "Plantain & game"
+      ],
+      "crafts": [
+        "Wood carving"
+      ],
+      "music": [
+        "Forest polyphonies"
+      ]
+    }
+  },
+  {
+    "id": "far-north",
+    "name": "Far North",
+    "image": "assets/far-north.jpg",
+    "intro": "Sahara fringe, Waza National Park.",
+    "highlights": {
+      "festivals": [
+        "Gerewol"
+      ],
+      "cuisines": [
+        "Millet dishes"
+      ],
+      "crafts": [
+        "Calabash art"
+      ],
+      "music": [
+        "Sahel strings"
+      ]
+    }
+  },
+  {
+    "id": "littoral",
+    "name": "Littoral",
+    "image": "assets/littoral.jpg",
+    "intro": "Douala port, coastal vibes.",
+    "highlights": {
+      "festivals": [
+        "Ngondo"
+      ],
+      "cuisines": [
+        "Grilled fish"
+      ],
+      "crafts": [
+        "Beadwork"
+      ],
+      "music": [
+        "Makossa"
+      ]
+    }
+  },
+  {
+    "id": "north",
+    "name": "North",
+    "image": "assets/north.jpg",
+    "intro": "Benoué park and savannas.",
+    "highlights": {
+      "festivals": [
+        "Gurna"
+      ],
+      "cuisines": [
+        "Corn couscous"
+      ],
+      "crafts": [
+        "Textiles"
+      ],
+      "music": [
+        "Mvet & Sahel"
+      ]
+    }
+  },
+  {
+    "id": "north-west",
+    "name": "North West",
+    "image": "assets/north-west.jpg",
+    "intro": "Bamenda highlands, crafts.",
+    "highlights": {
+      "festivals": [
+        "Abakwa"
+      ],
+      "cuisines": [
+        "Achu"
+      ],
+      "crafts": [
+        "Grassfield masks"
+      ],
+      "music": [
+        "Njang"
+      ]
+    }
+  },
+  {
+    "id": "west",
+    "name": "West",
+    "image": "assets/west.jpg",
+    "intro": "Bamiléké chefferies & culture.",
+    "highlights": {
+      "festivals": [
+        "Nguon"
+      ],
+      "cuisines": [
+        "Koki"
+      ],
+      "crafts": [
+        "Beadwork"
+      ],
+      "music": [
+        "Benskin"
+      ]
+    }
+  },
+  {
+    "id": "south",
+    "name": "South",
+    "image": "assets/south.jpg",
+    "intro": "Kribi beaches, Lobé Falls.",
+    "highlights": {
+      "festivals": [
+        "Kribi Sea Fest"
+      ],
+      "cuisines": [
+        "Seafood"
+      ],
+      "crafts": [
+        "Raffia"
+      ],
+      "music": [
+        "Makossa & Bikutsi"
+      ]
+    }
+  },
+  {
+    "id": "south-west",
+    "name": "South West",
+    "image": "assets/south-west.jpg",
+    "intro": "Buea & Mount Cameroon.",
+    "highlights": {
+      "festivals": [
+        "Mount Cameroon Race"
+      ],
+      "cuisines": [
+        "Eru & Waterfufu"
+      ],
+      "crafts": [
+        "Wood carving"
+      ],
+      "music": [
+        "Limbe rhythms"
+      ]
+    }
+  }
+]

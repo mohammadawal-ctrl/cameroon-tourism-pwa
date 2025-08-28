@@ -1,0 +1,72 @@
+[
+  {
+    "id": "pk001",
+    "region": "littoral",
+    "title": "Douala & Ngondo Experience",
+    "price": 150000,
+    "image": "assets/littoral.jpg",
+    "bundle": "hotel+tour",
+    "type": "culture",
+    "popularity": 91
+  },
+  {
+    "id": "pk002",
+    "region": "south",
+    "title": "Kribi Beach Escape",
+    "price": 180000,
+    "image": "assets/south.jpg",
+    "bundle": "hotel+tour",
+    "type": "family",
+    "popularity": 88
+  },
+  {
+    "id": "pk003",
+    "region": "south-west",
+    "title": "Mount Cameroon Trek",
+    "price": 220000,
+    "image": "assets/south-west.jpg",
+    "bundle": "tour",
+    "type": "adventure",
+    "popularity": 95
+  },
+  {
+    "id": "pk004",
+    "region": "north",
+    "title": "Benoué Safari Starter",
+    "price": 250000,
+    "image": "assets/north.jpg",
+    "bundle": "flight+hotel+tour",
+    "type": "adventure",
+    "popularity": 80
+  },
+  {
+    "id": "pk005",
+    "region": "centre",
+    "title": "Yaoundé City & Bikutsi",
+    "price": 130000,
+    "image": "assets/centre.jpg",
+    "bundle": "hotel+tour",
+    "type": "culture",
+    "popularity": 76
+  },
+  {
+    "id": "pk006",
+    "region": "west",
+    "title": "Bafoussam Chefferies",
+    "price": 160000,
+    "image": "assets/west.jpg",
+    "bundle": "tour",
+    "type": "culture",
+    "popularity": 83
+  },
+  {
+    "id": "pk007",
+    "region": "north-west",
+    "title": "Bamenda Highlands Hike",
+    "price": 170000,
+    "image": "assets/north-west.jpg",
+    "bundle": "hotel+tour",
+    "type": "adventure",
+    "popularity": 79
+  }
+]

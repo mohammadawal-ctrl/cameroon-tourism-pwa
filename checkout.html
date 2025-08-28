@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container">
+  <h1>Checkout</h1>
+  <div id="root"></div>
+</div>
+<script type="module">
+  import { CM } from './js/shared.js';
+  const root = document.getElementById('root');
+  const cart = CM.state.cart;
+  if(!cart.length){ root.innerHTML='<div class="empty">Your cart is empty.</div>'; }
+  else {
+    root.innerHTML = \`
+      <div class="grid cols-2">
+        <div class="card"><div class="content">
+          <h3>Traveler information</h3>
+          <label>Name</label><input id="name" class="input" placeholder="Full name"/>
+          <label>Email</label><input id="email" class="input" type="email" placeholder="you@example.com"/>
+          <label>Phone</label><input id="phone" class="input" placeholder="+237…"/>
+        </div></div>
+        <div class="card"><div class="content">
+          <h3>Payment (mock)</h3>
+          <div class="notice small">For demo only – no real payment is processed.</div>
+          <label>Card number</label><input class="input" placeholder="4111 1111 1111 1111"/>
+          <label>Expiry</label><input class="input" placeholder="MM/YY"/>
+          <label>CVC</label><input class="input" placeholder="123"/>
+          <div class="kicker" style="margin-top:12px;">Total: \${CM.fmtXAF(cart.reduce((a,x)=>{
+            const addons=(x.addons||[]).reduce((s,z)=>s+z.price,0);
+            return a + (x.price+addons)*(x.qty||1);
+          },0))}</div>
+          <a class="btn" id="pay">Pay / Save Booking</a>
+        </div></div>
+      </div>
+    \`;
+    document.getElementById('pay').addEventListener('click', ()=>{
+      const ref = 'BK'+Date.now().toString(36).toUpperCase();
+      const traveler = {
+        name: document.getElementById('name').value||'Guest',
+        email: document.getElementById('email').value||'',
+        phone: document.getElementById('phone').value||''
+      };
+      const booking = {
+        ref, traveler, items: cart, createdAt: new Date().toISOString(),
+        status: navigator.onLine ? 'confirmed' : 'pending'
+      };
+      CM.state.bookings.unshift(booking);
+      CM.state.cart = []; CM.save(); CM.updateCartCount();
+      location.href = 'confirm.html?ref='+ref;
+    });
+  }
+</script>
+
+</body>
+</html>

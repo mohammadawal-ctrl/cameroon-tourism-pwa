@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Package Detail · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container" id="pkg"></div>
+<script type="module">
+  import { CM, loadData } from './js/shared.js';
+  const id = CM.param('id');
+  const { packages } = await loadData();
+  const p = packages.find(x=>x.id===id);
+  const root = document.getElementById('pkg');
+  if(!p){ root.innerHTML='<div class="empty">Package not found.</div>'; throw new Error('not found'); }
+  root.innerHTML = `
+  <div class="card">
+    <img class="resp" src="${p.image}" alt="${p.title}"/>
+    <div class="content">
+      <h1>${p.title}</h1>
+      <div class="kicker">From ${CM.fmtXAF(p.price)}</div>
+      <div class="tags"><span class="tag">${p.type}</span><span class="tag">${p.bundle}</span></div>
+      <div class="section grid cols-2">
+        <div>
+          <label>Date</label>
+          <input id="date" class="input" type="date"/>
+        </div>
+        <div>
+          <label>Guests</label>
+          <input id="guests" class="input" type="number" min="1" value="1"/>
+        </div>
+      </div>
+      <div class="section">
+        <div class="kicker">Add-ons</div>
+        <label><input type="checkbox" value="meals:15000"/> Meals (+15 000 XAF)</label><br/>
+        <label><input type="checkbox" value="transport:20000"/> Transport (+20 000 XAF)</label><br/>
+        <label><input type="checkbox" value="guide:12000"/> Guide (+12 000 XAF)</label>
+      </div>
+      <div class="flex section">
+        <a class="btn" id="add">Add to Cart</a>
+        <a class="btn secondary" href="cart.html">Go to Cart</a>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('add').addEventListener('click', ()=>{
+    const date = document.getElementById('date').value||null;
+    const guests = parseInt(document.getElementById('guests').value||'1',10);
+    const addons = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(c=>{
+      const [name, price] = c.value.split(':');
+      return { name, price: parseInt(price,10) };
+    });
+    CM.addToCart(p, 1, date, guests, addons);
+  });
+</script>
+
+</body>
+</html>

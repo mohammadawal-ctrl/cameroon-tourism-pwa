@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packages · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('packages');
+  </script>
+  
+<div class="container">
+  <h1>Tour Packages</h1>
+  <div class="toolbar">
+    <input id="q" class="input" placeholder="Search packages..." />
+    <select id="typeSel">
+      <option value="">All types</option>
+      <option value="family">Family</option>
+      <option value="adventure">Adventure</option>
+      <option value="culture">Culture</option>
+    </select>
+    <select id="bundleSel">
+      <option value="">All bundles</option>
+      <option value="tour">Tour</option>
+      <option value="hotel+tour">Hotel + Tour</option>
+      <option value="flight+hotel+tour">Flight + Hotel + Tour</option>
+    </select>
+    <input id="minPrice" class="input" type="number" placeholder="Min XAF" style="max-width: 140px;" />
+    <input id="maxPrice" class="input" type="number" placeholder="Max XAF" style="max-width: 140px;" />
+    <select id="sortSel">
+      <option value="pop">Sort: Popularity</option>
+      <option value="priceAsc">Price ↑</option>
+      <option value="priceDesc">Price ↓</option>
+    </select>
+  </div>
+  <div id="list" class="grid cols-3"></div>
+</div>
+<script type="module">
+  import { CM, loadData } from './js/shared.js';
+  const { packages } = await loadData();
+  const params = new URL(location.href).searchParams;
+  document.getElementById('q').value = params.get('q')||'';
+  const list = document.getElementById('list');
+  function render(){
+    const q = (document.getElementById('q').value||'').toLowerCase();
+    const type = document.getElementById('typeSel').value;
+    const bundle = document.getElementById('bundleSel').value;
+    const minP = parseInt(document.getElementById('minPrice').value||'0',10);
+    const maxP = parseInt(document.getElementById('maxPrice').value||'999999999',10);
+    const sort = document.getElementById('sortSel').value;
+    let arr = packages.filter(p=>{
+      if(q && !(p.title.toLowerCase().includes(q))) return false;
+      if(type && p.type!==type) return false;
+      if(bundle && p.bundle!==bundle) return false;
+      if(!(p.price>=minP && p.price<=maxP)) return false;
+      return true;
+    });
+    if(sort==='priceAsc') arr.sort((a,b)=>a.price-b.price);
+    else if(sort==='priceDesc') arr.sort((a,b)=>b.price-a.price);
+    else arr.sort((a,b)=>b.popularity-a.popularity);
+    list.innerHTML='';
+    arr.forEach(p=>{
+      list.insertAdjacentHTML('beforeend', `
+        <div class="card">
+          <img class="resp" src="${p.image}" alt="${p.title}"/>
+          <div class="content">
+            <h3>${p.title}</h3>
+            <div class="tags"><span class="tag">${p.type}</span><span class="tag">${p.bundle}</span></div>
+            <div class="flex" style="justify-content: space-between; margin-top:8px;">
+              <div class="kicker">${CM.fmtXAF(p.price)}</div>
+              <a class="btn" href="package.html?id=${p.id}">Details</a>
+            </div>
+          </div>
+        </div>`);
+    });
+    if(!arr.length) list.innerHTML = '<div class="empty">No packages found.</div>';
+  }
+  ['q','typeSel','bundleSel','minPrice','maxPrice','sortSel'].forEach(id=>document.getElementById(id).addEventListener('input', render));
+  render();
+</script>
+
+</body>
+</html>

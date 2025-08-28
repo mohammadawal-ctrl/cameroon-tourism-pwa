@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destination Detail · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container" id="dest"></div>
+<script type="module">
+  import { CM, loadData } from './js/shared.js';
+  const id = CM.param('id');
+  const { destinations, packages } = await loadData();
+  const d = destinations.find(x=>x.id===id);
+  const root = document.getElementById('dest');
+  if(!d){ root.innerHTML='<div class="empty">Destination not found.</div>'; throw new Error('not found'); }
+  root.innerHTML = `
+    <div class="card">
+      <img class="resp" src="${d.image}" alt="${d.name}"/>
+      <div class="content">
+        <h1>${d.name}</h1>
+        <p class="kicker">${d.intro}</p>
+        <div class="grid cols-4 section">
+          <div><div class="kicker">Festivals</div>${(d.highlights.festivals||[]).map(x=>`<div class="tag">${x}</div>`).join(' ')}</div>
+          <div><div class="kicker">Cuisines</div>${(d.highlights.cuisines||[]).map(x=>`<div class="tag">${x}</div>`).join(' ')}</div>
+          <div><div class="kicker">Crafts</div>${(d.highlights.crafts||[]).map(x=>`<div class="tag">${x}</div>`).join(' ')}</div>
+          <div><div class="kicker">Music</div>${(d.highlights.music||[]).map(x=>`<div class="tag">${x}</div>`).join(' ')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <h2>Related packages</h2>
+      <div id="rel" class="grid cols-3"></div>
+    </div>
+  `;
+  const rel = document.getElementById('rel');
+  packages.filter(p=>p.region===id).forEach(p=>{
+    rel.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <img class="resp" src="${p.image}" alt="${p.title}"/>
+        <div class="content">
+          <h3>${p.title}</h3>
+          <div class="kicker">${CM.fmtXAF(p.price)}</div>
+          <a class="btn" href="package.html?id=${p.id}">View package</a>
+        </div>
+      </div>
+    `);
+  });
+  if(!rel.children.length){ rel.innerHTML='<div class="empty">No related packages yet.</div>'; }
+</script>
+
+</body>
+</html>

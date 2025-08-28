@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container">
+  <h1>Your Cart</h1>
+  <div id="cart"></div>
+  <div class="flex section">
+    <a class="btn" href="packages.html">Continue Shopping</a>
+    <a class="btn" href="checkout.html">Proceed to Checkout</a>
+  </div>
+</div>
+<script type="module">
+  import { CM } from './js/shared.js';
+  const root = document.getElementById('cart');
+  function totalOf(item){
+    const addons = (item.addons||[]).reduce((a,x)=>a+x.price,0);
+    return (item.price + addons) * (item.qty||1);
+  }
+  function render(){
+    const cart = CM.state.cart;
+    if(!cart.length){ root.innerHTML='<div class="empty">Your cart is empty.</div>'; return; }
+    root.innerHTML = \`
+      <table class="table">
+        <thead><tr><th>Package</th><th>Date</th><th>Guests</th><th class="right">Qty</th><th class="right">Each</th><th class="right">Total</th><th></th></tr></thead>
+        <tbody>
+          \${cart.map((x,i)=>\`
+            <tr>
+              <td>\${x.title}</td>
+              <td>\${x.date||'-'}</td>
+              <td>\${x.guests||1}</td>
+              <td class="right"><input data-i="\${i}" class="input" type="number" min="1" value="\${x.qty||1}" style="max-width:80px"/></td>
+              <td class="right">\${CM.fmtXAF(x.price)}</td>
+              <td class="right">\${CM.fmtXAF(totalOf(x))}</td>
+              <td><a class="btn secondary" data-del="\${i}">Remove</a></td>
+            </tr>
+          \`).join('')}
+        </tbody>
+      </table>
+      <div class="right kicker">Grand total: \${CM.fmtXAF(cart.reduce((a,x)=>a+totalOf(x),0))}</div>
+    \`;
+    root.querySelectorAll('input[type=number]').forEach(inp=>{
+      inp.addEventListener('input', ()=>{
+        const i = parseInt(inp.dataset.i,10);
+        CM.state.cart[i].qty = Math.max(1, parseInt(inp.value||'1',10));
+        CM.save(); CM.updateCartCount(); render();
+      });
+    });
+    root.querySelectorAll('[data-del]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const i = parseInt(btn.dataset.del,10);
+        CM.state.cart.splice(i,1); CM.save(); CM.updateCartCount(); render();
+      });
+    });
+  }
+  render();
+</script>
+
+</body>
+</html>

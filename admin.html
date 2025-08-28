@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('admin');
+  </script>
+  
+<div class="container">
+  <h1>Admin</h1>
+  <div class="grid cols-2">
+    <div class="card"><div class="content">
+      <h3>Import / Export JSON</h3>
+      <div class="flex">
+        <a class="btn" id="export">Export</a>
+        <input type="file" id="import" accept="application/json" />
+      </div>
+      <p class="small">Manage destinations & packages. Changes are saved to localStorage for demo.</p>
+    </div></div>
+    <div class="card"><div class="content">
+      <h3>Packages</h3>
+      <div id="pkgs"></div>
+      <a class="btn" id="addPkg">Add Package</a>
+    </div></div>
+  </div>
+</div>
+<script type="module">
+  import { CM, loadData } from './js/shared.js';
+  await loadData();
+  function render(){
+    const root = document.getElementById('pkgs');
+    root.innerHTML = CM.state.packages.map((p,i)=>\`
+      <div class="card" style="margin:10px 0;"><div class="content">
+        <div class="grid cols-4">
+          <input class="input" value="\${p.title}" data-k="title" data-i="\${i}"/>
+          <input class="input" value="\${p.region}" data-k="region" data-i="\${i}"/>
+          <input class="input" type="number" value="\${p.price}" data-k="price" data-i="\${i}"/>
+          <input class="input" value="\${p.image}" data-k="image" data-i="\${i}"/>
+        </div>
+        <div class="flex" style="margin-top:10px;">
+          <a class="btn secondary" data-del="\${i}">Delete</a>
+        </div>
+      </div></div>
+    \`).join('');
+    root.querySelectorAll('input').forEach(inp=>{
+      inp.addEventListener('input', ()=>{
+        const i = parseInt(inp.dataset.i,10);
+        const k = inp.dataset.k;
+        CM.state.packages[i][k] = (k==='price') ? parseInt(inp.value||'0',10) : inp.value;
+        CM.save();
+      });
+    });
+    root.querySelectorAll('[data-del]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const i = parseInt(btn.dataset.del,10);
+        CM.state.packages.splice(i,1); CM.save(); render();
+      });
+    });
+  }
+  render();
+  document.getElementById('addPkg').addEventListener('click', ()=>{
+    CM.state.packages.unshift({id:'pk'+Math.random().toString(36).slice(2,6), region:'centre', title:'New Package', price:100000, image:'assets/centre.jpg', bundle:'tour', type:'culture', popularity:50});
+    CM.save(); render();
+  });
+  document.getElementById('export').addEventListener('click', ()=>{
+    const data = { destinations: CM.state.destinations, packages: CM.state.packages };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'export.json'; a.click();
+  });
+  document.getElementById('import').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{
+        const data = JSON.parse(reader.result);
+        if(data.destinations) CM.state.destinations = data.destinations;
+        if(data.packages) CM.state.packages = data.packages;
+        CM.save(); alert('Imported!'); location.reload();
+      } catch(err){ alert('Invalid JSON'); }
+    };
+    reader.readAsText(file);
+  });
+</script>
+
+</body>
+</html>

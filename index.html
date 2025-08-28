@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('home');
+  </script>
+  
+<section class="hero">
+  <h1>Discover Cameroon</h1>
+  <p>Find authentic experiences across 10 regions — even when you’re offline.</p>
+  <div class="search">
+    <input id="searchInput" class="input" placeholder="Search packages, regions, culture..." />
+    <a class="btn" id="searchBtn">Search</a>
+    <a class="btn secondary" href="explore.html">Explore Regions</a>
+    <a class="btn secondary" href="packages.html">View Packages</a>
+  </div>
+  <div class="kicker" style="margin-top:10px;">PWA ready · Install to Home Screen</div>
+</section>
+<div class="container">
+  <h2>Featured regions</h2>
+  <div id="featured" class="grid cols-4"></div>
+  <hr/>
+  <h2>Popular packages</h2>
+  <div id="popular" class="grid cols-3"></div>
+</div>
+<script type="module">
+  import { CM, loadData } from './js/shared.js';
+  const { destinations, packages } = await loadData();
+  const feat = destinations.slice(0,8);
+  const cont = document.getElementById('featured');
+  feat.forEach(d=>{
+    cont.insertAdjacentHTML('beforeend', `
+      <a href="destination.html?id=${d.id}" class="card">
+        <img class="resp" src="${d.image}" alt="${d.name}"/>
+        <div class="content">
+          <h3>${d.name}</h3>
+          <div class="kicker">${d.intro}</div>
+        </div>
+      </a>`);
+  });
+  const pop = [...packages].sort((a,b)=>b.popularity-a.popularity).slice(0,6);
+  const popEl = document.getElementById('popular');
+  pop.forEach(p=>{
+    popEl.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <img class="resp" src="${p.image}" alt="${p.title}"/>
+        <div class="content">
+          <h3>${p.title}</h3>
+          <div class="tags"><span class="tag">${p.type}</span><span class="tag">${p.bundle}</span></div>
+          <div class="flex" style="justify-content: space-between; margin-top:8px;">
+            <div class="kicker">${CM.fmtXAF(p.price)}</div>
+            <a class="btn" href="package.html?id=${p.id}">View</a>
+          </div>
+        </div>
+      </div>`);
+  });
+  document.getElementById('searchBtn').addEventListener('click', ()=>{
+    const q = document.getElementById('searchInput').value.trim();
+    if(q) location.href = 'packages.html?q='+encodeURIComponent(q);
+    else location.href = 'explore.html';
+  });
+</script>
+
+</body>
+</html>

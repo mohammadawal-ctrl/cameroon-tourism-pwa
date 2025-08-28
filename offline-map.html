@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline Map · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('map');
+  </script>
+  
+<div class="container">
+  <h1>Offline Map</h1>
+  <div class="notice small">Simplified SVG map with a few highlighted sites.</div>
+  <div class="card"><div class="content">
+    <svg viewBox="0 0 400 600" style="width:100%; height:auto;">
+      <rect x="0" y="0" width="400" height="600" fill="#e7ecff" opacity="0.08"/>
+      <polygon points="200,20 280,60 300,120 260,200 240,280 200,360 180,440 150,520 100,560 60,540 40,500 80,420 120,340 140,260 160,180 160,100" fill="#4dc9ff" opacity="0.25" />
+      <!-- Sites -->
+      <circle cx="135" cy="520" r="6" fill="#3ebd93"/><text x="145" y="525" font-size="12" fill="#e7ecff">Kribi</text>
+      <circle cx="160" cy="470" r="6" fill="#3ebd93"/><text x="170" y="475" font-size="12" fill="#e7ecff">Limbe</text>
+      <circle cx="190" cy="420" r="6" fill="#3ebd93"/><text x="200" y="425" font-size="12" fill="#e7ecff">Buea/Mt Cameroon</text>
+      <circle cx="230" cy="360" r="6" fill="#3ebd93"/><text x="240" y="365" font-size="12" fill="#e7ecff">Yaoundé</text>
+      <circle cx="250" cy="420" r="6" fill="#3ebd93"/><text x="260" y="425" font-size="12" fill="#e7ecff">Douala</text>
+      <circle cx="210" cy="160" r="6" fill="#3ebd93"/><text x="220" y="165" font-size="12" fill="#e7ecff">Waza NP</text>
+    </svg>
+  </div></div>
+  <div class="notice small">Tips are cached for offline reading.</div>
+  <ul>
+    <li>Carry cash in XAF for remote areas.</li>
+    <li>Respect local customs and ask permission before photos.</li>
+    <li>Dry season (Nov–Mar) is best for northern safaris.</li>
+  </ul>
+</div>
+
+</body>
+</html>

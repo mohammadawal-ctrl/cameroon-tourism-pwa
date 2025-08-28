@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container">
+  <h1>Login / Register</h1>
+  <div class="grid cols-2">
+    <div class="card"><div class="content">
+      <h3>Login</h3>
+      <input class="input" placeholder="Email"/>
+      <input class="input" placeholder="Password" type="password"/>
+      <a class="btn">Login (mock)</a>
+    </div></div>
+    <div class="card"><div class="content">
+      <h3>Register</h3>
+      <input class="input" placeholder="Name"/>
+      <input class="input" placeholder="Email"/>
+      <input class="input" placeholder="Password" type="password"/>
+      <a class="btn">Create account (mock)</a>
+    </div></div>
+  </div>
+  <p class="small">Demo only. No real authentication is implemented.</p>
+</div>
+
+</body>
+</html>

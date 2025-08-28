@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline · Cameroon Explore</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0b1020" />
+</head>
+<body>
+  <script type="module">
+    import { CM, loadData } from './js/shared.js';
+    CM.renderShell('');
+  </script>
+  
+<div class="container">
+  <h1>You’re offline</h1>
+  <p class="kicker">Some features are unavailable, but key pages are cached.</p>
+  <div class="grid cols-3">
+    <a class="btn" href="explore.html">Explore</a>
+    <a class="btn" href="packages.html">Packages</a>
+    <a class="btn" href="mytrips.html">My Trips</a>
+  </div>
+</div>
+
+</body>
+</html>
